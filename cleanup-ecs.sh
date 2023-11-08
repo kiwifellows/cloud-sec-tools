@@ -2,6 +2,13 @@
 
 export AWS_PAGER=""
 
+#prompt for confirmation before running or exit
+read -p "This will delete all ECS clusters in all regions. Are you sure? (y/n) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+fi
+
 # Get a list of all AWS regions
 regions=$(aws ec2 describe-regions --query "Regions[].RegionName" --output text)
 
